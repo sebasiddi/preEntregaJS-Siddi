@@ -1,3 +1,4 @@
+// Calcula el interés compuesto de un importe dado según el interés anual y la cantidad de meses
 function interesCompuesto (sumaInicial, cantMeses, porcentaje){
   for (let i = 0; i < cantMeses; i++) {
     sumaInicial = sumaInicial + (((porcentaje/12)* sumaInicial )/100);
@@ -5,18 +6,21 @@ function interesCompuesto (sumaInicial, cantMeses, porcentaje){
   return sumaInicial;
 }
 
+
+// calcula el valor de un producto sin el IVA aplicado del 21%
 function sinIVA21 (importe){
   return (importe - ((importe*21)/100));
 }
 
+// calcula el valor de un producto sin el IVA aplicado del 10.5%
 function sinIVA10 (importe){
   return (importe - ((importe*10.5)/100));
 }
 
+// Calcula el valor del IVA aplicado a un producto
 function devIVA (importe){
   return (importe - sinIVA21(importe))
 }
-
 
 
 let option = "";
