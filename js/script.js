@@ -1,4 +1,3 @@
-
 // Calculadora Anti Inflación
 
 // Calcula el interés compuesto de un importe dado según el interés anual y la cantidad de meses
@@ -9,15 +8,19 @@ function interesCompuesto (sumaInicial, cantMeses, porcentaje){
   return sumaInicial.toFixed(2);
 }
 
-// calcula el valor de un producto sin el IVA aplicado del 21%
-function sinIVA21 (importe){
-  return ((importe - ((importe*21)/100)).toFixed(2));
+// Función de orden superior para calcular el valor de un producto sin IVA
+function calcularSinIVA(porcentajeIVA) {
+  return function(importe) {
+    return (importe - (importe * porcentajeIVA / 100)).toFixed(2);
+  };
 }
 
-// calcula el valor de un producto sin el IVA aplicado del 10.5%
-function sinIVA10 (importe){
-  return (importe - ((importe*10.5)/100).toFixed(2));
-}
+// Función para calcular sin IVA al 21%
+const sinIVA21 = calcularSinIVA(21);
+
+// Función para calcular sin IVA al 10.5%
+const sinIVA10 = calcularSinIVA(10.5);
+
 
 // Calcula el valor del IVA aplicado a un producto
 function devIVA (importe){
@@ -33,11 +36,37 @@ function calcularPagoOptimo(desc, tope){
  function precioPorKilo(precio, gramos){
   return(((1000*precio)/gramos).toFixed(2));
  }
- 
+
+
+
+ function verProductos(lista){
+  let listaString = []
+  lista.forEach(element => {
+    listaString= listaString + (element.id +" - "+ element.comida + ": $" +element.precio +"\n")
+  });
+  return (listaString);
+ }
+
+
+const listaProductos = [
+  {id: 1, comida: "Quesadillas de Pollo y Vegetales",precio: 2000},
+  {id: 2, comida: "Pastel de Calabaza, Espinaca y Pollo",precio: 2000},
+  {id: 3, comida: "Pastel de Batata Boniatto con Pollo a la Mostaza",precio: 2100},
+  {id: 4, comida: "Musaka Griega (Con Carne y Berenjenas Asadas)",precio: 2100},
+  {id: 5, comida: "Berenjenas Napolitanas",precio: 2200},
+  {id: 6, comida: "Nituke (Mil Hojas de Vegetales con Salsa Blanca y Parmesano)",precio: 2200},
+  {id: 7, comida: "Ratatoulille de Vegetales con Pollo",precio: 2300},
+  {id: 8, comida: "Omelette de Espinaca y Parmesano",precio: 2300},
+  {id: 9, comida: "Risotto de Pollo y Verdeo",precio: 2400},
+]
+
+
 
 let option = "";
+let optionSub1 = 1;
 while (option !== "0"){
-  option = prompt("1- Interés compuesto. 2- Restar IVA 21%. 3- Restar IVA 10.5%. 4-Calcular devolución de IVA. 5-Compra óptima. 6-Precio por Kilo. 0-SALIR")
+ // option = prompt("1- Interés compuesto. 2- Restar IVA 21%. 3- Restar IVA 10.5%. 4-Calcular devolución de IVA. 5-Compra óptima. 6-Precio por Kilo. 0-SALIR")
+  option = prompt("1- Ver Menú\n0-SALIR")
   if (option == "0") {
     break;
   }
@@ -46,32 +75,17 @@ while (option !== "0"){
       case "0": 
         break;
       case "1":
-        const origen = parseFloat(prompt("Ingrese suma para calcular interés"));
-        const tiempo = parseInt(prompt("Ingrese la cantidad de meses"));
-        const interes = parseFloat(prompt("Ingrese el interés anual"));
-        alert("El interés aplicado durante "+tiempo+" meses es de $"+interesCompuesto(origen, tiempo, interes));
-        break;
-      case "2":
-        const x = parseFloat (prompt("ingrese importe para calularlo sin IVA del 21%"));
-        alert("$"+x+" menos el 21% de IVA es: $"+(sinIVA21(x)));
-        break;
-      case "3":
-        const y = parseFloat (prompt("ingrese importe para calularlo sin IVA del 10.5%"));
-        alert("$"+y+" menos el 10.5% de IVA es: $"+(sinIVA10(y)));
-        break;
-      case "4":
-        const z = parseFloat (prompt("ingrese importe para calular la devolucion del IVA"));
-        alert("Si gastaste $"+z+" te van a devolver $"+(devIVA(z))+" del  IVA, el gasto real será de $"+(sinIVA21(z)));
-        break;
-      case "5":
-        const descuento = parseFloat(prompt("Ingrese el % de descuento"));
-        const topeDevolucion = parseFloat(prompt("Ingrese el monto tope de devolución"));
-        alert("Para aprovechar completo el "+descuento+"% de descuento la compra no tiene que superar los $"+calcularPagoOptimo(descuento, topeDevolucion));
-        break;
-      case "6":
-        const precioReferencia = parseFloat (prompt("ingrese el precio del producto por unidad"));
-        const pesoGramos = parseInt (prompt("ingrese el peso en gramos"));
-        alert("El precio por kilo del producto es de $"+precioPorKilo(precioReferencia, pesoGramos));
+        while (optionSub1 !== 0){
+          optionSub1 = prompt(verProductos(listaProductos)+"\n 0 para Volver");
+          if (optionSub1 == 0){
+            break;
+          }
+          else if (optionSub1 < 10){
+            alert("opción elegida "+listaProductos[optionSub1-1].comida)
+          }
+          else {alert("opcion incorrecta")}
+        }
+          
         break;
       default:
         alert("opción incorrecta");
