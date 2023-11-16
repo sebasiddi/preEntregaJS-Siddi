@@ -29,12 +29,41 @@ function devIVA (importe){
 }
 
 function verProductos(lista){
-let listaString = []
-lista.forEach(element => {
-  listaString= listaString + (element.id +" - "+ element.comida + ": $" +element.precio +"\n")
-});
-return (listaString);
+  let listaDeProductos = document.createElement("div");
+  let contenedorProductos = document.getElementById("menu-comida");
+  listaDeProductos.classList.add("productos");
+  lista.forEach(element => {
+    let nuevoElemento = document.createElement("p");
+    nuevoElemento.innerHTML = element.comida + ": $" + element.precio + '<button type="button" class="btn btn-success" id="agregar'+element.id+'">+</button><button type="button" class="btn btn-danger" id="quitar'+element.id+'">-</button> <input type="number" class="cantidades" id="cant'+element.id+'"  value="0" readonly>';
+    listaDeProductos.append(nuevoElemento);
+  });
+  contenedorProductos.append(listaDeProductos);
+
 }
+
+
+// Funcion para agregar productos
+
+function agregarAlCarrito(id, cant) {
+  const indiceExistente = carrito.findIndex(producto => producto.id === listaProductos[id].id);
+
+  if (indiceExistente !== -1) {
+    carrito[indiceExistente].cantidad = parseInt(cant);
+    carrito[indiceExistente].subtotal = carrito[indiceExistente].precio * carrito[indiceExistente].cantidad;
+  } else {
+    const nuevoProducto = new Carrito(
+      listaProductos[id].id,
+      listaProductos[id].comida,
+      listaProductos[id].precio,
+      listaProductos[id].vegano,
+      parseInt(cant),
+      listaProductos[id].precio * parseInt(cant)
+    );
+    carrito.push(nuevoProducto);
+  }
+  localStorage.setItem("checkOut", JSON.stringify(carrito))
+}
+
 
 // Función para filtrar los alimentos catalogados como veganos
 function veganos(lista){
@@ -43,6 +72,11 @@ function veganos(lista){
   return verProductos(veganosFiltrados);
 }
 
+
+
+
+
+
 class Menu{
   constructor(id, comida, precio, vegano){
     this.id = id;
@@ -50,8 +84,20 @@ class Menu{
     this.precio = precio;
     this.vegano = vegano;
   }
-
 }
+
+
+class Carrito extends Menu {
+  constructor(id, comida, precio, vegano, cantidad, precioTotal) {
+    super(id, comida, precio, vegano);
+    this.cantidad = cantidad;
+    this.precioTotal = precioTotal;
+  }
+}
+
+
+
+
 
 const listaProductos = [
   new Menu (1,"Quesadillas de Pollo y Vegetales",2000,false),
@@ -62,48 +108,42 @@ const listaProductos = [
   new Menu (6,"Nituke (Mil Hojas de Vegetales con Salsa Blanca y Parmesano)",2200,true),
   new Menu (7,"Ratatoulille de Vegetales con Pollo",2300,false),
   new Menu (8,"Omelette de Espinaca y Parmesano",2300,true),
-  new Menu (9,"Risotto de Pollo y Verdeo",2400,false)
+  new Menu (9,"Risotto de Pollo y Verdeo",2400,false),
+  new Menu (10,"Atún Marra",1000,false),
 ]
 
+let carrito = [];
+verProductos(listaProductos);
 
 
-let option = "";
-let optionSub1 = 1;
-while (option !== "0"){
-  option = prompt("1- Ver Menú \n 2-Ver comida Vegana \n 0-SALIR")
-  if (option == "0") {
-    break;
-  }
-  else{
-    switch(option){
-      case "0": 
-        break;
-      case "1":
+document.addEventListener("DOMContentLoaded", function() {
 
-        while (optionSub1 !== 0){
-          optionSub1 = prompt(verProductos(listaProductos)+"\n 0 para Volver");
-          if (optionSub1 == 0){
-            break;
-          }
-          else if (optionSub1 < 10){
-            if (listaProductos[optionSub1-1].vegano){
-              alert("A los prodctos veganos les corresponde un desuento del 20%, el precio final del producto es $"+descuento20(listaProductos[optionSub1-1].precio));
-            }
-            else{
-              alert("A los prodctos No veganos les corresponde un descuento del 10%, el precio final del producto es $"+descuento10(listaProductos[optionSub1-1].precio));
-            }
-          }
-          else {alert("opcion incorrecta")}
-        }
+  const botonesAgregar = document.querySelectorAll('[id^="agregar"]');
+  const botonesQuitar = document.querySelectorAll('[id^="quitar"]');
+  const inputCantidades = document.querySelectorAll('[id^="cant"]');
+  
 
-        break;
-      case "2":
-        alert("Lista de productos veganos: \n"+veganos(listaProductos))
-        break;
-      default:
-        alert("opción incorrecta");
-        break;
-    }
-  }
-}
-alert("Gracias Vuelvan prontos");
+  botonesAgregar.forEach((boton, index) => {
+    boton.addEventListener("click", function() {
+      const idProducto = index;
+      inputCantidades[index].value++;
+      const cantidad = inputCantidades[index].value;
+      console.log(cantidad);
+      agregarAlCarrito(idProducto, cantidad);
+    });
+  });
+
+  // Asigna el evento de clic a cada botón de quitar
+  botonesQuitar.forEach((boton, index) => {
+    boton.addEventListener("click", function() {
+      if (inputCantidades[index].value > 0){
+
+        const idProducto = index;
+        inputCantidades[index].value-- ;
+        const cantidad = inputCantidades[index].value;
+        //quitarDellCarrito(idProducto, cantidad);
+      }
+    });
+  });
+});
+

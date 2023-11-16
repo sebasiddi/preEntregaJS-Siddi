@@ -1,0 +1,24 @@
+*{
+ padding: 0; 
+ margin: 0;
+ box-sizing: border-box;
+  main{
+    #menu-comida{
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+      .productos{
+        width: 70%;
+        p{
+          display: grid;
+          grid-template-columns: 12fr 1fr 1fr 1fr;
+          gap: 10px;
+          .cantidades{
+            width: 50px;
+            text-align: right;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+* main #menu-comida {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+* main #menu-comida .productos {
+  width: 70%;
+}
+* main #menu-comida .productos p {
+  display: grid;
+  grid-template-columns: 12fr 1fr 1fr 1fr;
+  gap: 10px;
+}
+* main #menu-comida .productos p .cantidades {
+  width: 50px;
+  text-align: right;
+}/*# sourceMappingURL=main.css.map */
