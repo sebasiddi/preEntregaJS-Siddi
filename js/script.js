@@ -38,16 +38,18 @@ function verProductos(lista){
     listaDeProductos.append(nuevoElemento);
   });
   contenedorProductos.append(listaDeProductos);
-
 }
 
+// Función para actualizar localStorage del carrito
+function actualizarCarritoStorage() {
+  localStorage.setItem("checkOut", JSON.stringify(carrito));
+}
 
 // Funcion para agregar productos
-
 function agregarAlCarrito(id, cant) {
   const indiceExistente = carrito.findIndex(producto => producto.id === listaProductos[id].id);
-
   if (indiceExistente !== -1) {
+    localStorage.setItem(carrito[indiceExistente].id,JSON.parse(cant))
     carrito[indiceExistente].cantidad = parseInt(cant);
     carrito[indiceExistente].subtotal = carrito[indiceExistente].precio * carrito[indiceExistente].cantidad;
   } else {
@@ -59,21 +61,70 @@ function agregarAlCarrito(id, cant) {
       parseInt(cant),
       listaProductos[id].precio * parseInt(cant)
     );
+    localStorage.setItem(listaProductos[id].id,JSON.parse(cant))
     carrito.push(nuevoProducto);
   }
-  localStorage.setItem("checkOut", JSON.stringify(carrito))
-}
+  actualizarCarritoStorage();
+ };
 
 
+
+/* 
 // Función para filtrar los alimentos catalogados como veganos
 function veganos(lista){
   const veganosFiltrados = lista.filter((el) => el.vegano == true);
   console.log(veganosFiltrados);
   return verProductos(veganosFiltrados);
 }
+ */
+
+// Función para actualizar los inputs de cantidades con la data del Storage
+function levantarCantidadesStorage(){
+  
+for (let i=1; i < localStorage.length; i++){
+  const clave = localStorage.key(i);
+  const valor = localStorage.getItem(clave);
+  const inputActualizar = document.getElementById("cant"+clave);
+  inputActualizar.value = valor;
+  }
+};
+
+
+//Función para recuperar el Carrito del Storage en formato de objeto
+function levantarCarritoStorage(){
+  let carritoGuardado = localStorage.getItem("checkOut");
+  if (carritoGuardado) {
+    // Convertir la cadena JSON a un objeto JavaScript
+    let carritoStorage = JSON.parse(carritoGuardado);
+    return carritoStorage;
+  } else {
+    console.log("No hay datos en localStorage para 'checkOut' del carrito");
+  }
+}
+
+
+function verCarrito(carrito){
+  carritoDIV.innerHTML = "";
+  carritoDIV.classList.add("carrito");
+  carrito.forEach(element => {
+    let nuevoElemento = document.createElement("p");
+    nuevoElemento.innerHTML = element.comida + " Cantidad: "+ element.cantidad + ": $" + element.subtotal ;
+    carritoDIV.append(nuevoElemento);
+
+  });
+  
+}
 
 
 
+function limpiarCarrito(){
+  for (let i=1; i < localStorage.length; i++){
+    const clave = localStorage.key(i);
+    const inputActualizar = document.getElementById("cant"+clave);
+    inputActualizar.value = 0;
+    };
+  localStorage.clear();
+}
 
 
 
@@ -88,10 +139,10 @@ class Menu{
 
 
 class Carrito extends Menu {
-  constructor(id, comida, precio, vegano, cantidad, precioTotal) {
+  constructor(id, comida, precio, vegano, cantidad, subtotal) {
     super(id, comida, precio, vegano);
     this.cantidad = cantidad;
-    this.precioTotal = precioTotal;
+    this.subtotal = subtotal;
   }
 }
 
@@ -115,35 +166,64 @@ const listaProductos = [
 let carrito = [];
 verProductos(listaProductos);
 
-
-document.addEventListener("DOMContentLoaded", function() {
-
+  
   const botonesAgregar = document.querySelectorAll('[id^="agregar"]');
   const botonesQuitar = document.querySelectorAll('[id^="quitar"]');
   const inputCantidades = document.querySelectorAll('[id^="cant"]');
-  
+  const btnVaciarCarrito = document.getElementById("vaciarCarrito");
+  const btnVerCarrito = document.getElementById("verCarrito");
+  let carritoDIV = document.getElementById("carrito-container");
 
+  
+  //Botones para agregar o quitar items
   botonesAgregar.forEach((boton, index) => {
     boton.addEventListener("click", function() {
       const idProducto = index;
       inputCantidades[index].value++;
       const cantidad = inputCantidades[index].value;
-      console.log(cantidad);
       agregarAlCarrito(idProducto, cantidad);
+      verCarrito(levantarCarritoStorage());
     });
+    
   });
-
-  // Asigna el evento de clic a cada botón de quitar
+  
   botonesQuitar.forEach((boton, index) => {
     boton.addEventListener("click", function() {
       if (inputCantidades[index].value > 0){
-
         const idProducto = index;
         inputCantidades[index].value-- ;
         const cantidad = inputCantidades[index].value;
-        //quitarDellCarrito(idProducto, cantidad);
+        agregarAlCarrito(idProducto,cantidad);
+        verCarrito(levantarCarritoStorage());
       }
+      else{
+        console.log(inputCantidades[index].id)
+        //carrito = carrito.filter(objeto => objeto.id !== carrito.id);
+
+
+        //actualizarCarritoStorage();
+        //verCarrito(levantarCarritoStorage());
+
+      };
     });
   });
+  
+  // Botón para vaciar el carrito
+  btnVaciarCarrito.addEventListener("click",()=>{
+    limpiarCarrito();
+    carritoDIV.innerHTML ="";
 });
+
+btnVerCarrito.addEventListener("click",()=>{
+  
+  verCarrito(levantarCarritoStorage());
+});
+
+
+
+levantarCantidadesStorage();
+
+levantarCarritoStorage();
+
+
 
