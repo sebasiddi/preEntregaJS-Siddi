@@ -1,24 +1,67 @@
 *{
- padding: 0; 
- margin: 0;
- box-sizing: border-box;
-  main{
-    #menu-comida{
+  padding: 0; 
+  margin: 0;
+  box-sizing: border-box;
+  body {
+    background: linear-gradient(rgba(0, 0, 0, 0.534), rgba(0, 0, 0, 0.459)), url('../img/mate.jpg');
+    background-size:cover;
+    background-blend-mode:multiply;
+    color: white;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    main{
       display: flex;
+      flex-direction: column;
+      align-items: center;
       justify-content: center;
-      margin-top: 20px;
-      .productos{
-        width: 70%;
-        p{
-          display: grid;
-          grid-template-columns: 12fr 1fr 1fr 1fr;
-          gap: 10px;
-          .cantidades{
-            width: 50px;
-            text-align: right;
+      .ventana-menu{
+        display: grid;
+        grid-template-columns: 1fr, 2fr;
+        #main-title{
+          text-transform: uppercase;
+        }
+        #menu-comida{
+          display: flex;
+          justify-content: center;
+          margin-top: 20px;
+          flex-direction: column-reverse;
+          .productos{
+            width: 70%;
+            p{
+              display: grid;
+              grid-template-columns: 12fr 1fr 1fr 1fr;
+              gap: 10px;
+              .cantidades{
+                width: 50px;
+                text-align: right;
+              }
+            }
           }
+          .boton-vaciar{
+            align-self: center;
+  
+          }
+        }
+      }
+      .carrito{
+        background-color: rgb(83, 83, 83);
+        color: rgb(255, 252, 252);
+        padding: 15px;
+        border-radius: 15px;
+        display: flex;
+        align-items: flex-end;
+        flex-direction: column;
+        .precio-final{
+          background-color: red;
+          padding: 15px;
+          
+        }
+        .precio-final:hover{
+          content: "otr";
         }
       }
     }
   }
-}
+ }

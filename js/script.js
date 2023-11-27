@@ -80,15 +80,47 @@ function agregarAlCarrito(id, cant) {
       listaProductos[id].precio * parseInt(cant)
     );
     localStorage.setItem(listaProductos[id].id,JSON.parse(cant))
+    
     carrito.push(nuevoProducto);
   }
+  if (agrega){
+
+    Toastify({
+      text: "Agregaste "+listaProductos[id].comida+" al carrito",
+      duration: 3000,
+      close: true,
+      gravity: "top",
+      position: "right",
+      stopOnFocus: true,
+    }).showToast();
+  }
+  else{
+
+    mensajeQuitar(id);
+
+  }
   actualizarCarritoStorage();
+ };
+
+ function mensajeQuitar(id){
+   Toastify({
+    text: "Quitaste "+listaProductos[id].comida+" del carrito",
+    duration: 3000,
+    close: true,
+    gravity: "top",
+    position: "right",
+    stopOnFocus: true,
+    style:{
+      background: "red",
+    },
+  }).showToast();
  };
 
 
  // Función para quitar productos
 function quitarDelCarrito(index){
   inputCantidades[index].value--;
+  
   if (parseInt(inputCantidades[index].value) > 0) {
     const idProducto = index;
     const cantidad = inputCantidades[index].value;
@@ -100,11 +132,14 @@ function quitarDelCarrito(index){
       return obj.id !== idParaEliminar;
     });
     inputCantidades[index].value = 0;
+    localStorage.getItem(idParaEliminar) ? mensajeQuitar(index) : null;
     localStorage.removeItem(idParaEliminar);
     carrito = nuevoCarrito;
     actualizarCarritoStorage();
     verCarrito(levantarCarritoStorage());
+
   }
+
 };
 
 
@@ -125,7 +160,8 @@ function levantarCarritoStorage(){
   if (carritoGuardado) {
     // Convertir la cadena JSON a un objeto JavaScript
     let carritoStorage = JSON.parse(carritoGuardado);
-    return carritoStorage;
+    carrito.push(carritoStorage);
+    return carrito;
   } else {
     console.log("No hay datos en localStorage para 'checkOut' del carrito");
   }
@@ -134,12 +170,18 @@ function levantarCarritoStorage(){
 // Función para desplegar el carrito
 function verCarrito(carrito){
   carritoDIV.innerHTML = "";
+  let precioTotal = 0;
   carritoDIV.classList.add("carrito");
   carrito.forEach(element => {
     let nuevoElemento = document.createElement("p");
     nuevoElemento.innerHTML = element.comida + " Cantidad: "+ element.cantidad + ": $" + element.subtotal ;
     carritoDIV.append(nuevoElemento);
+    precioTotal = precioTotal + parseInt(element.subtotal);
   });
+  const precioFinal = document.createElement("span");
+  precioFinal.classList = ("precio-final");
+  precioFinal.innerText = "Total: $" +precioTotal;
+  carritoDIV.append(precioFinal);
 }
 
 
@@ -149,11 +191,10 @@ function limpiarCarrito(){
     const clave = localStorage.key(i);
     const inputActualizar = document.getElementById("cant"+clave);
     inputActualizar.value = 0;
+    carrito = [];
     };
   localStorage.clear();
 }
-
-
 
 class Menu{
   constructor(id, comida, precio, vegano){
@@ -199,7 +240,7 @@ verProductos(listaProductos);
   const inputCantidades = document.querySelectorAll('[id^="cant"]');
   const btnVaciarCarrito = document.getElementById("vaciarCarrito");
   let carritoDIV = document.getElementById("carrito-container");
-
+  let agrega = true;
   
   //Botones para agregar o quitar items
   botonesAgregar.forEach((boton, index) => {
@@ -207,6 +248,7 @@ verProductos(listaProductos);
       const idProducto = index;
       inputCantidades[index].value++;
       const cantidad = inputCantidades[index].value;
+      agrega = true;
       agregarAlCarrito(idProducto, cantidad);
       verCarrito(levantarCarritoStorage());
     });
@@ -215,23 +257,29 @@ verProductos(listaProductos);
   
   botonesQuitar.forEach((boton, index) => {
     boton.addEventListener("click", function() {
+      agrega = false;
       quitarDelCarrito(index);
   });
 });
   
   
-  // Botón para vaciar el carrito
-  btnVaciarCarrito.addEventListener("click",()=>{
-    limpiarCarrito();
-    carritoDIV.innerHTML ="";
+// Botón para vaciar el carrito
+btnVaciarCarrito.addEventListener("click",()=>{
+  limpiarCarrito();
+  carritoDIV.innerHTML ="";
+  Toastify({
+    text: "Se vació el carrito",
+    duration: 3000,
+    newWindow: true,
+    close: true,
+    gravity: "top",
+    position: "right",
+    stopOnFocus: true,
+  }).showToast();
 });
-
 
 
 
 levantarCantidadesStorage();
 
 levantarCarritoStorage();
-
-
-
