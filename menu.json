@@ -1,0 +1,68 @@
+[
+  {
+    "id": 1,
+    "comida": "Quesadillas de Pollo y Vegetales",
+    "precio": 2000,
+    "vegano": false
+  },
+  {
+    "id": 2,
+    "comida": "Pastel de Calabaza, Espinaca y Pollo",
+    "precio": 2000,
+    "vegano": false
+  },
+  {
+    "id": 3,
+    "comida": "Pastel de Batata Boniatto con Pollo a la Mostaza",
+    "precio": 2100,
+    "vegano": false
+  },
+  {
+    "id": 4,
+    "comida": "Musaka Griega (Con Carne y Berenjenas Asadas)",
+    "precio": 2100,
+    "vegano": false
+  },
+  {
+    "id": 5,
+    "comida": "Berenjenas Napolitanas",
+    "precio": 2200,
+    "vegano": true
+  },
+  {
+    "id": 6,
+    "comida": "Nituke (Mil Hojas de Vegetales con Salsa Blanca y Parmesano)",
+    "precio": 2200,
+    "vegano": true
+  },
+  {
+    "id": 7,
+    "comida": "Ratatoulille de Vegetales con Pollo",
+    "precio": 2300,
+    "vegano": false
+  },
+  {
+    "id": 8,
+    "comida": "Omelette de Espinaca y Parmesano",
+    "precio": 2300,
+    "vegano": true
+  },
+  {
+    "id": 9,
+    "comida": "Risotto de Pollo y Verdeo",
+    "precio": 2400,
+    "vegano": false
+  },
+  {
+    "id": 10,
+    "comida": "Atún Marra",
+    "precio": 1000,
+    "vegano": false
+  },
+  {
+    "id": 11,
+    "comida": "Baguel",
+    "precio": 1000,
+    "vegano": false
+  }
+]

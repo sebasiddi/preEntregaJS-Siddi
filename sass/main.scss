@@ -16,52 +16,54 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      .ventana-menu{
-        display: grid;
-        grid-template-columns: 1fr, 2fr;
-        #main-title{
-          text-transform: uppercase;
-        }
-        #menu-comida{
-          display: flex;
-          justify-content: center;
-          margin-top: 20px;
-          flex-direction: column-reverse;
-          .productos{
-            width: 70%;
-            p{
-              display: grid;
-              grid-template-columns: 12fr 1fr 1fr 1fr;
-              gap: 10px;
-              .cantidades{
-                width: 50px;
-                text-align: right;
-              }
+      #main-title{
+        text-transform: uppercase;
+      }
+      #menu-comida{
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+        .productos{
+          width: 70%;
+          p{
+            display: grid;
+            grid-template-columns: 12fr 1fr 1fr 1fr;
+            gap: 10px;
+            .cantidades{
+              width: 50px;
+              text-align: right;
             }
-          }
-          .boton-vaciar{
-            align-self: center;
-  
           }
         }
       }
       .carrito{
-        background-color: rgb(83, 83, 83);
-        color: rgb(255, 252, 252);
-        padding: 15px;
-        border-radius: 15px;
         display: flex;
-        align-items: flex-end;
         flex-direction: column;
-        .precio-final{
-          background-color: red;
+        margin: 20px;
+        font-size: larger;
+        background-color: rgb(85, 85, 85);
+        padding: 20px;
+        border-radius: 15px 0px;
+        overflow: visible;
+        width: 50%;
+        p{
+
+          border-bottom: 5px solid rgb(41 41 41);
+        }
+        .total{
+          background-color: rgba(17, 233, 10, 0.678);
           padding: 15px;
-          
+          margin: 15px;
+          border-radius: 15px;
+          cursor: pointer;
+          align-self: flex-end;
+          justify-self: right;
         }
-        .precio-final:hover{
-          content: "otr";
+        .total:hover{
+          background-color: rgba(17, 233, 10, 0.253);
         }
-      }
+
+     }
     }
   }
  }

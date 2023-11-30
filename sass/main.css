@@ -19,47 +19,49 @@
   align-items: center;
   justify-content: center;
 }
-* body main .ventana-menu {
-  display: grid;
-  grid-template-columns: 1fr, 2fr;
-}
-* body main .ventana-menu #main-title {
+* body main #main-title {
   text-transform: uppercase;
 }
-* body main .ventana-menu #menu-comida {
+* body main #menu-comida {
   display: flex;
   justify-content: center;
   margin-top: 20px;
-  flex-direction: column-reverse;
 }
-* body main .ventana-menu #menu-comida .productos {
+* body main #menu-comida .productos {
   width: 70%;
 }
-* body main .ventana-menu #menu-comida .productos p {
+* body main #menu-comida .productos p {
   display: grid;
   grid-template-columns: 12fr 1fr 1fr 1fr;
   gap: 10px;
 }
-* body main .ventana-menu #menu-comida .productos p .cantidades {
+* body main #menu-comida .productos p .cantidades {
   width: 50px;
   text-align: right;
 }
-* body main .ventana-menu #menu-comida .boton-vaciar {
-  align-self: center;
-}
 * body main .carrito {
-  background-color: rgb(83, 83, 83);
-  color: rgb(255, 252, 252);
-  padding: 15px;
-  border-radius: 15px;
   display: flex;
-  align-items: flex-end;
   flex-direction: column;
+  margin: 20px;
+  font-size: larger;
+  background-color: rgb(85, 85, 85);
+  padding: 20px;
+  border-radius: 15px 0px;
+  overflow: visible;
+  width: 50%;
 }
-* body main .carrito .precio-final {
-  background-color: red;
+* body main .carrito p {
+  border-bottom: 5px solid rgb(41, 41, 41);
+}
+* body main .carrito .total {
+  background-color: rgba(17, 233, 10, 0.678);
   padding: 15px;
+  margin: 15px;
+  border-radius: 15px;
+  cursor: pointer;
+  align-self: flex-end;
+  justify-self: right;
 }
-* body main .carrito .precio-final:hover {
-  content: "otr";
+* body main .carrito .total:hover {
+  background-color: rgba(17, 233, 10, 0.253);
 }/*# sourceMappingURL=main.css.map */
