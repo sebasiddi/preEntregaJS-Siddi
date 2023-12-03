@@ -1,0 +1,25 @@
+
+
+@media (max-width:767px){
+  body{
+    main{
+      #menu-comida{
+        .productos{
+          width: 90%;
+          p{
+            :not(:first-child){
+              height: 40px;
+            }
+            input{
+              padding: 10px;
+            }
+          }
+        }
+      }
+      .carrito{
+        width: 90%;
+      }
+    }
+  }
+
+}

@@ -19,20 +19,30 @@
       #main-title{
         text-transform: uppercase;
       }
+     
       #menu-comida{
         display: flex;
         justify-content: center;
         margin-top: 20px;
         .productos{
           width: 70%;
+          .vegano{display: grid;}
+          .noVegano{display: grid;}
           p{
             display: grid;
             grid-template-columns: 12fr 1fr 1fr 1fr;
             gap: 10px;
+            align-items: baseline;
+            :not(:first-child){
+              height: 40px;
+            }
             .cantidades{
               width: 50px;
               text-align: right;
             }
+          }
+          .vegano, .noVegano{
+            border-bottom: 2px solid rgb(124, 124, 124);
           }
         }
       }
@@ -46,9 +56,14 @@
         border-radius: 15px 0px;
         overflow: visible;
         width: 50%;
-        p{
-
+        .lista-carrito{
+          //display: flex;
+          display: grid;
+          //flex-direction: row;
+          grid-template-columns: 1fr 2fr 1fr;
+          justify-content: space-between;
           border-bottom: 5px solid rgb(41 41 41);
+    
         }
         .total{
           background-color: rgba(17, 233, 10, 0.678);
@@ -58,12 +73,23 @@
           cursor: pointer;
           align-self: flex-end;
           justify-self: right;
+          .disclaimer{
+            color: black;
+            font-size: x-small;
+            text-align: right;
+            visibility: hidden;
+          }
         }
-        .total:hover{
-          background-color: rgba(17, 233, 10, 0.253);
+         .total:hover{
+          background-color: rgba(25, 161, 20, 0.253);
+          .disclaimer{
+            visibility: visible;
+          }
         }
-
      }
     }
   }
  }
+
+
+ @import "media";

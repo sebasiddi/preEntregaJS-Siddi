@@ -55,14 +55,14 @@
   },
   {
     "id": 10,
-    "comida": "Atún Marra",
-    "precio": 1000,
+    "comida": "Ensalada Caesar ( variedad de hojas verdes, croutons, pollo especiado y allioli).",
+    "precio": 1500,
     "vegano": false
   },
   {
     "id": 11,
-    "comida": "Baguel",
-    "precio": 1000,
-    "vegano": false
+    "comida": "Ensalada Flor (Con Daditos de Queso y Huevo Duro)",
+    "precio": 1800,
+    "vegano": true
   }
 ]

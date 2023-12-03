@@ -30,14 +30,27 @@
 * body main #menu-comida .productos {
   width: 70%;
 }
+* body main #menu-comida .productos .vegano {
+  display: grid;
+}
+* body main #menu-comida .productos .noVegano {
+  display: grid;
+}
 * body main #menu-comida .productos p {
   display: grid;
   grid-template-columns: 12fr 1fr 1fr 1fr;
   gap: 10px;
+  align-items: baseline;
+}
+* body main #menu-comida .productos p :not(:first-child) {
+  height: 40px;
 }
 * body main #menu-comida .productos p .cantidades {
   width: 50px;
   text-align: right;
+}
+* body main #menu-comida .productos .vegano, * body main #menu-comida .productos .noVegano {
+  border-bottom: 2px solid rgb(124, 124, 124);
 }
 * body main .carrito {
   display: flex;
@@ -50,7 +63,10 @@
   overflow: visible;
   width: 50%;
 }
-* body main .carrito p {
+* body main .carrito .lista-carrito {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  justify-content: space-between;
   border-bottom: 5px solid rgb(41, 41, 41);
 }
 * body main .carrito .total {
@@ -62,6 +78,30 @@
   align-self: flex-end;
   justify-self: right;
 }
+* body main .carrito .total .disclaimer {
+  color: black;
+  font-size: x-small;
+  text-align: right;
+  visibility: hidden;
+}
 * body main .carrito .total:hover {
-  background-color: rgba(17, 233, 10, 0.253);
+  background-color: rgba(25, 161, 20, 0.253);
+}
+* body main .carrito .total:hover .disclaimer {
+  visibility: visible;
+}
+
+@media (max-width: 767px) {
+  body main #menu-comida .productos {
+    width: 90%;
+  }
+  body main #menu-comida .productos p :not(:first-child) {
+    height: 40px;
+  }
+  body main #menu-comida .productos p input {
+    padding: 10px;
+  }
+  body main .carrito {
+    width: 90%;
+  }
 }/*# sourceMappingURL=main.css.map */
